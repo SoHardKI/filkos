@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сокращение ссылки</title>
+</head>
+<body>
+<form id="my_form">
+    <input id="link" type="text" name="link">
+    <input type="submit">
+</form>
+<div id="new_short_link" style="display: none">
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="config.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#my_form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: homeUrl + '/shorting_link.php',
+                method: 'POST',
+                data: {link: $("#link").val()},
+                success: function (data) {
+                    let link = homeUrl + '/short_link/' + data;
+                    $("#new_short_link").show();
+                    $("#new_short_link").html('<a href="' + link + '">' + link + '</a>');
+                },
+            });
+        });
+    });
+</script>
+</body>
+</html>
